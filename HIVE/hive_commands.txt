@@ -1,0 +1,32 @@
+create database one; -> create database
+show databases;     -> 
+drop database one cascade;s, 
+use database one;
+show table;
+
+
+create table emp(id INT,name STRING, dept STRING, yoj INT, sal INT)
+    > ROW FORMAT DELIMITED
+    > FIELDS TERMINATED BY ','
+    > tblproperties("skip.header.line.count"="1");
+
+
+
+
+show tables;
+describe emp;
+select * from emp;
+
+create a csv file in /home/cloudera/ (cat > emp.csv)
+
+LOAD DATA LOCAL INPATH '/home/cloudera/emp.csv' INTO TABLE emp;
+
+select * from emp;
+select avg(sal) from emp group by dept;
+
+
+create two csv file customer and order
+
+SELECT c.id,c.name,c.add,o.amt
+    > from customer c JOIN order o 
+    > on (c.id = o.cid);

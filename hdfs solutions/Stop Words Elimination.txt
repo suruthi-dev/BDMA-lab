@@ -1,0 +1,12 @@
+hdfs dfs -mkdir ex2
+hdfs dfs -mkdir ex2/input
+
+hdfs dfs -put /home/cloudera/Desktop/cloudera_fs/ex2/data.txt ex2/input/
+hdfs dfs -put /home/cloudera/Desktop/cloudera_fs/ex2/sw.txt ex2/input/
+
+
+hadoop jar /home/cloudera/StopWords.jar WordCount ex2/input/data.txt ex2/output/ -skip ex2/input/sw.txt
+
+hdfs dfs -ls ex2/output/
+hdfs dfs -cat ex2/output/part-r-00000
+

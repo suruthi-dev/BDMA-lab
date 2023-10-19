@@ -1,0 +1,19 @@
+# pipeline format
+
+cat sample_sw.txt | python map_sw.py | python reduce_sw.py
+
+
+hdfs dfs -mkdir sw
+hdfs dfs -mkdir sw/input
+hdfs dfs -put /home/cloudera/Desktop/stopword/sample_sw.txt sw/input
+
+hadoop jar /usr/lib/hadoop-0.20-mapreduce/contrib/streaming/hadoop-streaming-2.6.0-mr1-cdh5.13.0.jar  
+-files /home/cloudera/Desktop/stopword/map_sw.py, /home/cloudera/Desktop/stopword/reduce_sw.py \
+-mapper "python map_sw.py"  
+-reducer "python reduce_sw.py"  
+-input sw/input/sample_sw.txt  
+-output sw/out/
+
+hdfs dfs -cat sw/out/part-00000
+
+

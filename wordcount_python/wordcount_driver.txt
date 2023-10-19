@@ -1,0 +1,18 @@
+# pipeline 
+
+cat sample.txt | python map.py | python reduce.py
+
+
+
+hdfs dfs -ls mkdir wc_py
+hdfs dfs -mkdir wc_py/input
+hdfs dfs -put /home/cloudera/Desktop/wordcount/sample.txt wc_py/input
+
+hadoop jar /usr/lib/hadoop-0.20-mapreduce/contrib/streaming/hadoop-streaming-2.6.0-mr1-cdh5.13.0.jar
+-files /home/cloudera/Desktop/wordcount/map.py,/home/cloudera/Desktop/wordcount/reduce.py 
+-mapper "python map.py" 
+-reducer "python reduce.py"  
+-input wc_py/input/sample.txt  
+-output wc_py/out/
+
+

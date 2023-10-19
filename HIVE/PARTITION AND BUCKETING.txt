@@ -1,0 +1,81 @@
+CREATE A NON-PARTIONED TABLE
+
+create table user_no_part(
+sno int,
+name string,
+city string)
+row format delimited
+fields terminated by ','
+tblproperties("skip.header.line.count"="1")
+
+LOAD DATA LOCAL INPATH '/home/cloudera/emp.csv' INTO TABLE emp;
+
+======================================
+======================================
+
+
+## static partition
+
+create table user_data
+(sno int,
+name string)
+partitioned by (city string);
+
+# insert the values of non-partitioned table to partitioned table
+
+insert into table user_data partition(city='IND') select sno,name from user_no_part where city = 'IND';
+
+select * from user_data;
+
+======================================
+======================================
+
+## dynamic partition
+
+create table user_data_dyn(
+sno int, name string)
+partitioned by (city string);
+
+set hive.exec.dynamic.partition.mode = nonstrict;
+
+insert into table user_data_dyn partition  (city) select sno,name,city from user_no_part where city = 'IND';
+
+======================================
+======================================
+
+
+## BUCKETING
+
+set hive.exec.dynamic.partition.mode=nonstrict;
+set hive.exec.dynamic.partition=true;
+set hive.enforce.bucketing = true;
+
+ CREATE TABLE bucket_no_part(sno int, name string, city string)
+    > row format delimited
+    > fields terminated by ','
+    > tblproperties("skip.header.line.count"="1");
+
+
+LOAD DATA LOCAL INPATH '/home/cloudera/Desktop/hive/data.txt
+
+
+
+CREATE TABLE bucket(
+    > sno int, name string, city string)
+    > CLUSTERED BY (city) into 3 BUCKETS ;
+	
+	
+insert into table bucket select * from bucket_no_part;
+
+
+
+======================================
+======================================
+printing the buckets :
+
+hdfs dfs -cat /user/hive/warehouse/temp.db/bucket/000000_0;
+hdfs dfs -cat /user/hive/warehouse/temp.db/bucket/000001_0;
+hdfs dfs -cat /user/hive/warehouse/temp.db/bucket/000002_0;
+
+
+

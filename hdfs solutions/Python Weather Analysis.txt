@@ -1,0 +1,5 @@
+cat sample_weather.txt | python max_temperature_map.py | sort | python max_temperature_reduce.py 
+
+
+2006	22.0
+

@@ -1,0 +1,20 @@
+# pipeline 
+
+cat sample_temp.txt | python map_temp.py |sort | python reduce_temp.py
+
+
+hdfs dfs -mkdir temp
+hdfs dfs -mkdir temp/input
+hdfs dfs -put /home/cloudera/Desktop/maxtemp/sample_temp.txt temp/input
+
+
+hadoop jar /usr/lib/hadoop-0.20-mapreduce/contrib/streaming/hadoop-streaming-2.6.0-mr1-cdh5.13.0.jar
+ -files /home/cloudera/Desktop/maxtemp/map_temp.py, /home/cloudera/Desktop/maxtemp/reduce_temp.py 
+ -mapper "python map_temp.py" 
+ -reducer "python reduce_temp.py"  
+ -input temp/input/sample_temp.txt 
+ -output temp/out/
+
+
+
+

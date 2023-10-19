@@ -1,0 +1,17 @@
+# pipeline 
+
+cat eq.txt | python map_eq.py | python reduce_eq.py
+
+
+hdfs dfs -mkdir eq
+hdfs dfs -mkdir eq/input
+hdfs dfs -put /home/cloudera/Desktop/earthquake/eq.txt  eq/input/
+
+
+hadoop jar /usr/lib/hadoop-0.20-mapreduce/contrib/streaming/hadoop-streaming-2.6.0-mr1-cdh5.13.0.jar
+ -files /home/cloudera/Desktop/earthquake/map_eq.py, /home/cloudera/Desktop/earthquake/reduce_eq.py
+ -mapper "python map_eq.py" 
+ -reducer "python reduce_eq.py"
+ -input eq/input/eq.txt  
+ -output eq/out/
+

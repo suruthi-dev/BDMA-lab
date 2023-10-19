@@ -1,0 +1,8 @@
+hdfs dfs -mkdir ex4
+hdfs dfs -mkdir ex4/input
+
+hdfs -put /home/cloudera/Desktop/cloudera_fs/ex4/WeatherAnalysis.txt ex4/input/
+hadoop  jar /home/cloudera/WeatherAnalysis.jar  WeatherAnalysis  ex4/input/sample_weather.txt  ex4/output/
+
+hdfs dfs -cat ex4/output/part-r-00000
+

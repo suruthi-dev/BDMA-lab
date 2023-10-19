@@ -1,0 +1,8 @@
+hdfs dfs -mkdir ex3
+hdfs dfs -mkdir ex3/input
+
+hdfs -put /home/cloudera/Desktop/cloudera_fs/ex3/Earthquake.txt ex3/input/
+
+hadoop jar /home/cloudera/Earthquake.jar Earthquake ex3/input/Earthquake.txt ex3/output/
+
+hdfs dfs -cat ex3/output/part-r-00000
